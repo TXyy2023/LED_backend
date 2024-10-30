@@ -26,10 +26,24 @@ def generate_font_bitmap(chars, font_path='苹方黑体-中粗-简.ttf', size=16
     return bitmaps
 
 # 测试输出
-chars = "刘永洋"  # 多个字符
+chars = "A"  # 多个字符
 bitmaps = generate_font_bitmap(chars)
+# print(bitmaps)
+bit_list_16=[]
 for char, bitmap in bitmaps.items():
     print(f"Character: {char}")
     for row in bitmap:
-        print(''.join(['1' if pixel else '0' for pixel in row]))
-    print("\n")
+        row_data=''.join(['1' if pixel else '0' for pixel in row])
+        # print(row_data)
+        bit_list_16.append(row_data)
+    #     print(''.join(['1' if pixel else '0' for pixel in row]))
+    # print("\n")
+print(bit_list_16)
+bit_list_8=[]
+for i in bit_list_16:
+    first_8_bits = i[:8]
+    second_8_bits = i[8:]
+    bit_list_8.append(first_8_bits)
+    bit_list_8.append(second_8_bits)
+print(bit_list_8)
+

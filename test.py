@@ -1,32 +1,10 @@
-from flask import Flask, jsonify, request
+# 例子二进制字符串
+binary_str = '10000000'
 
-app = Flask(__name__)
+# 1. 将二进制字符串转换为整数
+decimal_value = int(binary_str, 2)
 
-# 创建一个简单的首页路由
-@app.route('/')
-def home():
-    return "Welcome to the Flask App!"
+# 2. 使用 hex() 将整数转换为16进制字符串
+hex_value = hex(decimal_value)  # [2:] 去掉 '0x' 前缀
 
-# 创建一个 /send_data 路由用于返回 JSON 数据
-@app.route('/send_data', methods=['GET'])
-def send_data():
-    str = request.args.get('str','1')  # 获取 num 参数的列表
-    data = {
-        "message": "Hello, this is data from Flask!",
-        "status": "success",
-        "str":{str}
-    }
-    return jsonify(data)
-
-# 创建一个接收数据的路由
-@app.route('/receive_data', methods=['POST'])
-def receive_data():
-    if request.is_json:
-        data = request.get_json()
-        return jsonify({"received_data": data}), 200
-    else:
-        return jsonify({"error": "Invalid JSON"}), 400
-
-# 运行服务器
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+print(hex_value)
