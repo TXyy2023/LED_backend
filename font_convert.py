@@ -45,11 +45,11 @@ def generate_font_bitmap(chars, font_path='苹方黑体-中粗-简.ttf', size=16
         bit_list_8.append(sec_hex)
     # print(bit_list_8)    
     return bit_list_8
-
-# 测试输出
-chars = "A"  # 多个字符
-bit_list_8 = generate_font_bitmap(chars)
-print(bit_list_8)
+if __name__ == '__main__':
+    # 测试输出
+    chars = "A"  # 多个字符
+    bit_list_8 = generate_font_bitmap(chars)
+    print(bit_list_8)
 # bit_list_16=[]
 # for char, bitmap in bitmaps.items():
 #     print(f"Character: {char}")
