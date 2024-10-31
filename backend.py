@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-
+from font_convert import generate_font_bitmap
 app = Flask(__name__)
 
 # 创建一个简单的首页路由
@@ -11,8 +11,10 @@ def home():
 @app.route('/send_data', methods=['GET'])
 def send_data():
     str = request.args.get('str','1')  # 获取 num 参数的列表
+    bitmap=generate_font_bitmap(str)
     data = {
-        "str":str
+        "str":str,
+        "bitmap":bitmap
     }
     return jsonify(data)
 
