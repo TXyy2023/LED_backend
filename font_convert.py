@@ -30,18 +30,25 @@ def generate_font_bitmap(chars, font_path='proggy_square/ProggySquare.ttf', size
             bit_list_16.append(row_data)
             print(''.join(['1' if pixel else '0' for pixel in row]))
         # print("\n")
-    print(bit_list_16)
+   
     bit_list_16 = [''.join(row) for row in zip(*bit_list_16)]
-    bit_list_8=[]
+    print(bit_list_16)
+    # bit_list_8=[]
+    # for i in bit_list_16:
+    #     first_8_bits = i[:8]
+    #     second_8_bits = i[8:]
+    #     fir_hex=hex(int(first_8_bits, 2))[2:].zfill(2)
+    #     sec_hex=hex(int(second_8_bits, 2))[2:].zfill(2)
+    #     bit_list_8.append(fir_hex)
+    #     bit_list_8.append(sec_hex)
+    bit_list_hex=[]
     for i in bit_list_16:
-        first_8_bits = i[:8]
-        second_8_bits = i[8:]
-        fir_hex=hex(int(first_8_bits, 2))[2:].zfill(2)
-        sec_hex=hex(int(second_8_bits, 2))[2:].zfill(2)
-        bit_list_8.append(fir_hex)
-        bit_list_8.append(sec_hex)
-    # print(bit_list_8)    
-    return bit_list_8
+        # row_data=hex(int(i, 2))[2:].zfill(4)
+        row_data = hex(int(i, 2))[2:]
+        print(row_data)
+        bit_list_hex.append(row_data)
+    return row_data
+    # return bit_list_8
 
 def image_to_bitmap(img_path, size=(16, 16)):
     # 打开图片并转换为灰度模式
