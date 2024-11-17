@@ -19,13 +19,23 @@ def send_data():
     return jsonify(data)
 
 # 创建一个接收数据的路由
+
 @app.route('/receive_data', methods=['POST'])
 def receive_data():
-    if request.is_json:
-        data = request.get_json()
-        return jsonify({"received_data": data}), 200
-    else:
-        return jsonify({"error": "Invalid JSON"}), 400
+    # 检查请求中是否包含文件
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part in the request"}), 400
+    
+    file = request.files['file']
+    
+    # 检查文件是否为空
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+    
+    # 保存文件或执行其他操作
+    # 例如，可以保存文件到服务器：file.save('/path/to/save/' + file.filename)
+    
+    return jsonify({"message": "File received successfully", "filename": file.filename}), 200
 
 # 运行服务器
 if __name__ == '__main__':
