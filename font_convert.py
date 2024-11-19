@@ -68,12 +68,12 @@ def image_to_bitmap(img):
     for row in bitmap:
         row_data = ''.join(['1' if pixel else '0' for pixel in row])
         bit_list_16.append(row_data)
-        print(row_data)
+        # print(row_data)
     bit_list_16 = [''.join(row) for row in zip(*bit_list_16)]
     for i in bit_list_16:
         # row_data=hex(int(i, 2))[2:].zfill(4)
         row_data = hex(int(i, 2))[2:]
-        print(row_data)
+        # print(row_data)
         bit_list_hex.append(row_data)
     return bit_list_hex
 def split_image(img_path):
@@ -100,8 +100,6 @@ def split_image(img_path):
             bit_list_16.append(out_1)
         # 保存为 PNG 文件，每个文件命名为 "output_<index>.png"
         # img_chunk.save(f"output_{i}.png", "PNG")
-
-    print(f"分割完成，共生成 {num_splits} 个 16x16 的 PNG 图片。")
     return bit_list_16
 if __name__ == '__main__':
     # # 测试输出
@@ -113,7 +111,7 @@ if __name__ == '__main__':
     # img_path = '01.png'  # 替换为实际图片路径
     # bit_list_8 = image_to_bitmap(img_path)
     
-    bit_list_16=split_image('03.png')
+    bit_list_16=split_image('temp.png')
     print(bit_list_16)
 
 

@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
-from font_convert import generate_font_bitmap
+from font_convert import generate_font_bitmap,split_image
+import base64
 app = Flask(__name__)
 
 # 创建一个简单的首页路由
@@ -20,22 +21,26 @@ def send_data():
 
 # 创建一个接收数据的路由
 
-@app.route('/receive_data', methods=['POST'])
-def receive_data():
-    # 检查请求中是否包含文件
-    if 'file' not in request.files:
-        return jsonify({"error": "No file part in the request"}), 400
+@app.route('/receive_img', methods=['POST'])
+def receive_img():
+    request_data = request.get_json()  # 获取 JSON 格式的请求体
+    img = request_data.get('img', 'default_value')  # 从 JSON 中提取 img 参数
+    # print(img)
+    try:
+        # 解码 Base64 数据
+        img_data = base64.b64decode(img)
+        with open("temp.png", "wb") as img_file:
+            img_file.write(img_data)  # 将解码后的数据保存为文件
+    except Exception as e:
+        print(e)
+        # response = {"status": "error", "message": str(e)}
     
-    file = request.files['file']
-    
-    # 检查文件是否为空
-    if file.filename == '':
-        return jsonify({"error": "No selected file"}), 400
-    
-    # 保存文件或执行其他操作
-    # 例如，可以保存文件到服务器：file.save('/path/to/save/' + file.filename)
-    
-    return jsonify({"message": "File received successfully", "filename": file.filename}), 200
+    bitmap=split_image("temp.png")
+    data = {
+        "str":"img",
+        "bitmap":bitmap
+    }
+    return jsonify(data)
 
 # 运行服务器
 if __name__ == '__main__':
